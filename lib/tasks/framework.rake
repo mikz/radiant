@@ -166,11 +166,14 @@ the new files:"
         end
       end
 
-      desc "Update admin images from your current radiant install"
+      desc "Update admin and radiant images from your current radiant install"
       task :images do
-        project_dir = RAILS_ROOT + '/public/images/admin/'
-        images = Dir["#{File.dirname(__FILE__)}/../../public/images/admin/*"]
-        FileUtils.cp(images, project_dir)
+        %w{admin radiant}.each do |d|
+          project_dir = RAILS_ROOT + "/public/images/#{d}/"
+          FileUtils.mkdir_p(project_dir)
+          images = Dir["#{File.dirname(__FILE__)}/../../public/images/#{d}/*"]
+          FileUtils.cp(images, project_dir)
+        end
       end
 
       desc "Update admin stylesheets from your current radiant install"
